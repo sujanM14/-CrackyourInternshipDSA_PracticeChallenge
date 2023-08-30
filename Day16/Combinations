@@ -1,0 +1,24 @@
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        if(n==0)
+        return Collections.emptyList();
+     
+        List<List<Integer>> res= new ArrayList<>();
+        backtrack(n,k,0,res,new ArrayList<Integer>());
+         return res;
+    }
+    public void  backtrack(int n,int k,int idx,List<List<Integer>> res,ArrayList<Integer>comb)
+    {
+        if(comb.size()==k)
+        {
+            res.add(new ArrayList<>(comb));
+            return;
+        }
+        for(int i=idx;i<n;i++)
+        {
+            comb.add(i+1);
+            backtrack(n,k,i+1,res,comb);
+            comb.remove(comb.size()-1);
+        }
+    }
+}

@@ -1,0 +1,38 @@
+class Solution {
+//Recursive method- not work for all testcases 
+    public int climbStairs_rec(int n)
+    {
+        if(n<0)
+        return 0;
+       if(n==0 )
+       return 1;
+       int ans1=climbStairs_rec(n-1);
+       int ans2=climbStairs_rec(n-2);
+       return ans1+ans2;
+    }
+    //dp
+
+    public int climbStairs_dp(int n,int [] dp) {
+        if(n<0)
+        return 0;
+       if(n==0 )
+       return 1;
+       if(dp[n] != -1)
+       return dp[n];
+       int ans1=climbStairs_dp(n-1,dp);
+       int ans2=climbStairs_dp(n-2,dp);
+       dp[n]=ans1+ans2;
+       return ans1+ans2;
+    }
+
+    
+    public int climbStairs(int n) {
+        //return climbStairs_rec(n);
+         int dp[]= new int[n+1];
+        for(int i=0;i<n+1;i++)
+        {
+            dp[i]=-1;
+        }
+         return climbStairs_dp(n,dp);
+    }
+}

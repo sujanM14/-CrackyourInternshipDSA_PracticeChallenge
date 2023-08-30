@@ -1,0 +1,13 @@
+class Solution {
+    public int ChocolateDist(int[] prices,int m) {
+        int min_diff=Integer.MAX_VALUE;
+    Arrays.sort(prices);
+    if(m==0 || prices.length==0)
+    return 0;
+    for(int i=0;i+m-1<prices.length;i++)
+    {
+       min_diff=Integer.min(min_diff,prices[i+m-1]-prices[i]);
+    }
+    return min_diff;
+}
+}

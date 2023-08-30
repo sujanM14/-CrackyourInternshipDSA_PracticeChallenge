@@ -1,0 +1,92 @@
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int n=nums.length;
+        int [][] dp= new int [n+1][n+1];
+        for(int []dps :dp)
+        Arrays.fill(dps,0);
+        int ans= finalans(nums,n);
+        return ans;
+    }
+
+    public static int finalans(int [] nums,int n)
+    {
+        if(n==0)
+        return 0;
+
+        ArrayList<Integer> ans = new ArrayList<>();
+        ans.add(nums[0]);
+        for(int i=1;i<n;i++)
+        {
+            if(nums[i]>ans.get(ans.size()-1))
+            ans.add(nums[i]);
+            else 
+            {
+            int index = Collections.binarySearch(ans, nums[i]);  //return index it can be inserted
+            if (index < 0) {
+                index = -(index + 1);
+            }
+                ans.set(index,nums[i]);
+            }
+        }
+        return ans.size();
+        
+   }
+
+
+public static int solve3(int [] nums,int n)
+    {
+        int []dpcurrrow=new int [n+1];
+        int []dpnextrow=new int [n+1];
+        Arrays.fill(dpcurrrow,0);
+        Arrays.fill(dpcurrrow,0);
+       for(int curr=n-1;curr>=0;curr--)
+       {
+           for(int prev =curr-1;prev>=-1;prev--)
+           {
+            int take=0;
+           if(prev==-1 || nums[curr]>nums[prev])
+           { take = 1+dpnextrow[curr+1];
+            }
+           int notTake=0+dpnextrow[prev+1];
+           dpcurrrow[prev+1]=Math.max(take,notTake);
+           }
+          dpnextrow= dpcurrrow;
+       }
+return dpnextrow[0];
+        
+   }
+
+    public static int solve(int [] nums,int curr,int n,int prev,int [][]dp)
+    {
+        if(curr==n)
+        return 0;
+
+        if(dp[curr][prev+1] != -1)
+        return dp[curr][prev+1];
+
+        int take=0;
+        if(prev==-1 || nums[curr]>nums[prev])
+         { take = 1+solve(nums,curr+1,n,curr,dp);
+
+}
+        int notTake=solve(nums,curr+1,n,prev,dp);
+        return dp[curr][prev+1]=Math.max(take,notTake);
+   }
+    public static int solve2(int [] nums,int n,int [][]dp)
+    {
+       for(int curr=n-1;curr>=0;curr--)
+       {
+           for(int prev =curr-1;prev>=-1;prev--)
+           {
+              int take=0;
+        if(prev==-1 || nums[curr]>nums[prev])
+         { take = 1+dp[curr+1][curr+1];
+          }
+        int notTake=0+dp[curr+1][prev+1];
+       dp[curr][prev+1]=Math.max(take,notTake);
+           }
+       }
+return dp[0][0];
+        
+   }
+}

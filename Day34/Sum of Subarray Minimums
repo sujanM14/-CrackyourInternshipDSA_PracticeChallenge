@@ -1,0 +1,46 @@
+class Solution {
+      
+    public int sumSubarrayMins(int[] arr) {
+        long mod=(int)Math.pow(10,9)+7  ;
+        Stack <Integer> st1 = new Stack<>();
+        Stack <Integer> st2 = new Stack<>(); 
+        int[] pre_min=new int[arr.length];
+        int[] post_min=new int[arr.length];
+        int n=arr.length;
+        for(int i=0;i<n;i++)
+        {
+            post_min[i]=n-i-1;
+            pre_min[i]=i;
+        }
+        for(int i=0;i<n;i++)
+        {
+            while(!st1.isEmpty() && arr[st1.peek()]>arr[i])
+            {
+                post_min[st1.peek()]=i-st1.peek()-1;
+                st1.pop();
+             //   System.out.println(i+" "+" "+post_min[i]);
+            }
+            st1.push(i);
+        }
+        for(int i=n-1;i>=0;i--)
+        {
+            while(!st2.isEmpty() && arr[st2.peek()]>=arr[i])
+            {
+                pre_min[st2.peek()]=st2.peek()-i-1;
+                st2.pop();
+               // System.out.println(i+" "+pre_min[i]);
+            }
+            st2.push(i);
+        }
+      
+        long sum=0;
+        for(int i=0;i<n;i++)
+        {
+            //System.out.println(i+" "+pre_min[i]+" "+post_min[i]);
+           sum+=(long)arr[i]*(pre_min[i]+1)*(post_min[i]+1);
+           sum=sum%mod;
+        }
+        return (int)sum;
+    }
+   
+}

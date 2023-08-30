@@ -1,0 +1,26 @@
+class Solution {
+    public int findMaxForm(String[] strs, int m, int n) {
+       int[][] dp = new int[m+1][n+1];
+       for(String str: strs)
+       {
+           int[] cnt=getCount(str);
+           for(int i=m;i>=cnt[0];i--)
+           {
+               for(int j=n;j>=cnt[1];j--)
+               {
+                   dp[i][j]=Math.max(dp[i][j],1+dp[i-cnt[0]][j-cnt[1]]);
+               }
+           }
+       }
+       return dp[m][n];
+    }
+    public int[] getCount(String str)
+    {
+        int [] cnt=new int[2];
+        for(char c: str.toCharArray())
+        {
+          cnt[c-'0']++;
+        }
+        return cnt;
+    }
+}

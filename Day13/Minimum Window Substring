@@ -1,0 +1,47 @@
+import java.util.HashMap;
+
+class Solution {
+    public String minWindow(String s, String t) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        int mtch = 0, dmtch = t.length();
+        int i = -1, j = -1;
+        for (int k = 0; k < t.length(); k++) {
+            char ch = t.charAt(k);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        }
+        HashMap<Character, Integer> map1 = new HashMap<>();
+        String ans = "";
+        while (true) {
+            boolean flag1 = false, flag2 = false;
+            while (i < s.length()-1 && mtch < dmtch) {
+                 i++;
+                char ch = s.charAt(i);
+                map1.put(ch, map1.getOrDefault(ch, 0) + 1);
+                if (map1.getOrDefault(ch, 0) <= map.getOrDefault(ch, 0))
+                    mtch++;
+               
+                flag1 = true;
+            }
+            while (j < i && mtch == dmtch) {
+                String pans = s.substring(j+1, i+1);
+                // System.out.println(i+" "+j+pans);
+                if (ans.length() == 0 || pans.length() < ans.length() )
+                    ans = pans;
+                 j++;   
+                char ch1 = s.charAt(j);
+                if (map1.get(ch1) == 1) {
+                    map1.remove(ch1);
+                } else {
+                    map1.put(ch1, map1.get(ch1) - 1);
+                }
+                if (map1.getOrDefault(ch1, 0) < map.getOrDefault(ch1, 0))
+                    mtch--;
+                flag2 = true;
+
+            }
+            if (!flag1 && !flag2)
+                break;
+        }
+        return ans;
+    }
+}

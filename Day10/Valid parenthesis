@@ -1,0 +1,52 @@
+class Solution {
+    public boolean validPalindrome(String s) {
+        int res[]= new int[1];
+        return isPalin(s,res);
+    }
+    public boolean isPalin(String s,int res[])
+    {
+        int i=0,j=s.length()-1;
+        int count=0;
+        while(i<j)
+        {
+            if(s.charAt(i)==s.charAt(j))
+            {
+                i++;
+                j--;
+            }else if(res[0] ==1)
+            {
+                return false;
+            }
+            else{
+            res[0]++;
+             boolean oneans= isPalin(s.substring(0, i) + s.substring(i + 1), res);
+             boolean twoans= isPalin(s.substring(0, j) + s.substring(j + 1), res);
+             return oneans || twoans;
+            }
+        }
+        return true;
+    }
+}
+
+/************************************************************/
+ class Solution {
+    public boolean validPalindrome(String s)  {
+        int left = 0;
+        int right = s.length() - 1;
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right))
+                return checkPalindrome(left + 1, right, s) ||    
+                checkPalindrome(left, right - 1, s);
+            left++;
+            right--;
+        }
+        return true;
+    }
+    public boolean checkPalindrome(int left, int right, String s) {
+        while (left < right) {
+            if (s.charAt(left++) != s.charAt(right--))
+                return false;
+        }
+        return true;
+    }
+}

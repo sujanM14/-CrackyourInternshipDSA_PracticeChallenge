@@ -1,0 +1,23 @@
+
+class Solution
+{
+    public boolean findPair(int arr[], int size, int n)
+    {
+        //code here.
+        Arrays.sort(arr);
+       int low=0,high=1;
+       while(low<=high && high<size )
+       {
+           int diff=arr[high]-arr[low];
+           if(low != high && diff==n)
+           return true;
+           else if(diff>n)
+           low++;
+           else
+           high++;
+         
+       }
+       return false;
+        
+    }
+}

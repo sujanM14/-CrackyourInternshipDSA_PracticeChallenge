@@ -1,0 +1,27 @@
+class Solution {
+    public int mctFromLeafValues(int[] arr) {
+        Stack<Integer> st= new Stack<>();
+        int sum=0,t=0;
+        for(int n:arr)
+        {
+            while(!st.isEmpty() && n>st.peek())
+            {
+                t=st.pop();
+                if(st.isEmpty())
+                sum+=t*n;
+                else
+                sum+=t*Math.min(n,st.peek());
+            }
+            st.push(n);
+        }
+        while(!st.isEmpty())
+            {
+                t=st.pop();
+                if(!st.isEmpty())
+                sum+=t*st.peek();
+
+            }
+  return sum;
+    }
+  
+}

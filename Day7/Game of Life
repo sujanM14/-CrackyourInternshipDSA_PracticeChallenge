@@ -1,0 +1,90 @@
+class Solution {
+    public boolean checkToLive(int[][] board ,int i,int j)
+    {
+        int count1=0,count0=0;
+        if(i>0)
+        {
+            if(board[i-1][j]==1)
+            count1++;
+            else
+            count0++;
+        }
+        if(j>0)
+        {
+            if(board[i][j-1]==1)
+            count1++;
+            else
+            count0++;
+        }
+        if(i<board.length-1)
+        {
+            if(board[i+1][j]==1)
+            count1++;
+            else
+            count0++;
+        }
+        if(j<board[0].length-1)
+        {
+            if(board[i][j+1]==1)
+            count1++;
+            else
+            count0++;
+        }
+        if(i<board.length-1 && j<board[0].length-1)
+        {
+            if(board[i+1][j+1]==1)
+            count1++;
+            else
+            count0++;
+        }
+         if(i>0 && j>0)
+        {
+            if(board[i-1][j-1]==1)
+            count1++;
+            else
+            count0++;
+        }
+         if(i<board.length-1 && j>0)
+        {
+            if(board[i+1][j-1]==1)
+            count1++;
+            else
+            count0++;
+        }
+         if(i>0 && j<board[0].length-1)
+        {
+            if(board[i-1][j+1]==1)
+            count1++;
+            else
+            count0++;
+        }
+        if(board[i][j]==1){
+            if(count1<2 || count1>3)
+            return true;
+            else
+            return false;
+        }
+        if(board[i][j]==0)
+        {
+            if(count1==3)
+            return true;
+            else 
+            return false;
+        }
+        return false;
+    }
+    public void gameOfLife(int[][] board) {
+     boolean changed[][]=new boolean[board.length][board[0].length];
+      for(int i=0;i<board.length;i++){
+          for(int j=0;j<board[0].length;j++){
+             changed[i][j]=checkToLive(board,i,j);
+          }
+      }
+       for(int i=0;i<board.length;i++){
+          for(int j=0;j<board[0].length;j++){
+             if(changed[i][j])
+             board[i][j]=(board[i][j]+1)%2;
+          }
+      } 
+    }
+}

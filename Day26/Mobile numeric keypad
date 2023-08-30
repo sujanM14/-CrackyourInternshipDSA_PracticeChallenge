@@ -1,0 +1,43 @@
+class Solution
+{
+    int matrix[][] = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9},
+        {-1, 0, -1}
+    };
+    
+    public long getCount(int N)
+    {
+        long ans = 0;
+        long dp[][] = new long[10][N + 1]; // Modified the size of dp array
+        
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if (matrix[i][j] != -1)
+                    ans += helper(i, j, N, dp);
+            }
+        }
+        return ans;
+    }
+    
+    public long helper(int i, int j, int n, long[][] dp)
+    {
+        if (n == 1)
+            return 1;
+        if (dp[matrix[i][j]][n] != 0) // Changed -1 to 0
+            return dp[matrix[i][j]][n];
+        
+        long a = helper(i, j, n - 1, dp);
+        long b = 0, c = 0, d = 0, e = 0; // Initialize b, c, d, e
+        
+        if (i - 1 >= 0 && matrix[i - 1][j] != -1) b = helper(i - 1, j, n-1, dp);
+        if (j - 1 >= 0 && matrix[i][j - 1] != -1) c = helper(i, j - 1, n-1, dp);
+        if (i + 1 < 4 && matrix[i + 1][j] != -1) d = helper(i + 1, j, n-1, dp);
+        if (j + 1 < 3 && matrix[i][j + 1] != -1) e = helper(i, j + 1, n-1, dp);
+        
+        return dp[matrix[i][j]][n] = a + b + c + d + e;
+    }
+}

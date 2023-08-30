@@ -1,0 +1,52 @@
+/*************************Same concept using arrayList*******************************/
+
+class Solution {
+    public String simplifyPath(String path) {
+        // I didn't know yesterday that we could use vars like this!
+        var dirs = new ArrayList<String>();
+        for(var dir : path.split("/")) {
+            if(dir.isEmpty() || dir.equals(".")){
+                continue;
+            }
+            if(dir.equals("..")) {
+                if(!dirs.isEmpty()){
+                    dirs.remove(dirs.size()-1);
+                }
+            }
+            else {
+                dirs.add(dir);
+            }
+        }
+        return "/" + String.join("/", dirs);
+    }
+}
+
+
+
+/**************************Optimized solution using stack****************************************************************************/
+
+class Solution {
+    public String simplifyPath(String path) {
+        String[] dirs = path.split("/");
+        Deque<String> stack = new ArrayDeque<>();
+
+        for (String dir : dirs) {
+            if (dir.equals("") || dir.equals(".")) {
+                continue;
+            } else if (dir.equals("..")) {
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                }
+            } else {
+                stack.push(dir);
+            }
+        }
+
+        StringBuilder simplifiedPath = new StringBuilder();
+        while (!stack.isEmpty()) {
+            simplifiedPath.append("/").append(stack.removeLast());
+        }
+
+        return simplifiedPath.length() == 0 ? "/" : simplifiedPath.toString();
+    }
+}

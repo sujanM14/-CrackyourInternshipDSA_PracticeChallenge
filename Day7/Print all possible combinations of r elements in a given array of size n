@@ -1,0 +1,29 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class CombinationGenerator {
+
+    public static void main(String[] args) {
+        int[] array = {1, 2, 3, 4};
+        int r = 3;
+        generateCombinations(array, r);
+    }
+
+    public static void generateCombinations(int[] array, int r) {
+        List<Integer> combination = new ArrayList<>();
+        generateCombinationsHelper(array, r, 0, combination);
+    }
+
+    public static void generateCombinationsHelper(int[] array, int r, int startIndex, List<Integer> combination) {
+        if (combination.size() == r) {
+            System.out.println(combination);
+            return;
+        }
+
+        for (int i = startIndex; i < array.length; i++) {
+            combination.add(array[i]);
+            generateCombinationsHelper(array, r, i + 1, combination);
+            combination.remove(combination.size() - 1);
+        }
+    }
+}

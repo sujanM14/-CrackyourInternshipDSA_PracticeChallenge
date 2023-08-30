@@ -1,0 +1,27 @@
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        subsets(0,new ArrayList<Integer>(),res,nums);
+        return res;
+    }
+    public void subsets(int idx,List<Integer>comb ,List<List<Integer>> res,int [] nums )
+    {
+        if(idx<=nums.length)
+        {
+            res.add(new ArrayList<>(comb));
+        }
+        int i=idx;
+        while(i<nums.length)
+        {
+            comb.add(nums[i]);
+            subsets(i+1,comb,res,nums);
+            comb.remove(comb.size()-1);
+            i++;
+            while(i<nums.length && nums[i]==nums[i-1])
+            i++;
+        }
+        return;
+        
+    }
+}

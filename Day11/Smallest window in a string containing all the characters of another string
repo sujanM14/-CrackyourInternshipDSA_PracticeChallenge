@@ -1,0 +1,50 @@
+import java.util.*;
+
+class Solution {
+    public static String smallestWindow(String S, String P) {
+        int totalCount = P.length();
+
+        // Frequency map for characters in string P
+        Map<Character, Integer> freqMap = new HashMap<>();
+        for (char c : P.toCharArray()) {
+            freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
+        }
+
+        int left = 0;
+        int minLen = Integer.MAX_VALUE;
+        int minStart = 0;
+        int count = 0;
+
+        for (int right = 0; right < S.length(); right++) {
+            char rightChar = S.charAt(right);
+
+            if (freqMap.containsKey(rightChar)) {
+                freqMap.put(rightChar, freqMap.get(rightChar) - 1);
+                if (freqMap.get(rightChar) >= 0) {
+                    count++;
+                }
+
+                while (count == totalCount) {
+                    if (right - left + 1 < minLen) {
+                        minLen = right - left + 1;
+                        minStart = left;
+                    }
+
+                    char leftChar = S.charAt(left);
+                    if (freqMap.containsKey(leftChar)) {
+                        freqMap.put(leftChar, freqMap.get(leftChar) + 1);
+                        if (freqMap.get(leftChar) > 0) {
+                            count--;
+                        }
+                    }
+                    left++;
+                }
+            }
+        }
+        if (minLen == Integer.MAX_VALUE) {
+            return "-1";
+        }
+
+        return S.substring(minStart, minStart + minLen);
+    }
+}

@@ -1,0 +1,38 @@
+class Solution {
+    public String removeDuplicates(String s, int k) {
+        Stack <Pair<Character,Integer>> st=new Stack<>();
+        int i=0;
+        while(i<s.length())
+        {
+            char ch=s.charAt(i);
+           if(!st.isEmpty() && st.peek().getKey() == ch)
+           {
+               Pair<Character,Integer> pr=st.pop();
+               int val=pr.getValue()+1;
+                pr=new Pair<>(pr.getKey(), val);
+                st.push(pr);
+           }else
+           {
+               Pair<Character,Integer> pr=new Pair<>(ch, 1);
+                st.push(pr);
+           }
+           Pair<Character,Integer> pr=st.peek();
+           if(pr.getValue()==k)
+           {
+               st.pop();
+           }
+           i++;
+        }
+        StringBuilder sb = new StringBuilder();
+       for (Pair<Character, Integer> pair : st)
+       {
+          char key = pair.getKey();
+         int value = pair.getValue();
+            
+            for (int j = 0; j < value; j++) {
+                sb.append(key);
+            }
+       }
+       return sb.toString();
+    }
+}

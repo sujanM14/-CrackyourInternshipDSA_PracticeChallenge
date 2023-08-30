@@ -1,0 +1,36 @@
+class Solution {
+String max;
+public void findMaximumNum(String str,int k)
+{
+max=str;
+helper(str.toCharArray(),k,max);
+return max;
+}
+public void helper(char[] str,int k,int max)
+{
+if(k==0)
+return ;
+
+for(int i=0;i<str.length-1;i++)
+{
+for(int j=i+1;j<str.length;j++)
+{
+if(str[i]<str[j])
+{
+char temp=str[i];
+str[i]=str[j];
+str[j]=temp;
+
+if(String.valueOf(str).compareTo(max) > 0)
+max=String.valueOf(str);
+helper(str,k-1,max);
+
+temp=str[i];
+str[i]=str[j];
+str[j]=temp;
+}
+}
+}
+}
+
+}

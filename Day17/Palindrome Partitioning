@@ -1,0 +1,34 @@
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> res= new ArrayList<>();
+        part(s,new ArrayList<String>(),res,0);
+        return res;
+    }
+    public void part(String s,List<String> comb ,List<List<String>> res,int idx)
+    {
+     if(idx==s.length())
+      {
+      res.add(new ArrayList<>(comb));
+      return ;
+      }
+     for(int i=idx;i<s.length();i++)
+      {
+         if(checkPalin(s,idx,i)){
+         comb.add(s.substring(idx,i+1));
+         part(s,comb,res,i+1);
+         comb.remove(comb.size() - 1);
+         }
+      }
+    }
+    public boolean checkPalin(String s,int start ,int end)
+    {
+        while(start<=end)
+        {
+            if(s.charAt(start) != s.charAt(end))
+            return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
+}

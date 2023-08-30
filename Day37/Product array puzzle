@@ -1,0 +1,40 @@
+
+
+class Solution {
+    public static long[] productExceptSelf(int nums[], int n) {
+       long product = 1;
+        int count0 = 0;
+        long res[] = new long[n];
+
+        // Calculate the product of all non-zero elements
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == 0) {
+                count0++;
+                continue;
+            }
+            product *= nums[i];
+        }
+
+        if (count0 >= 2) {
+            Arrays.fill(res, 0);
+        } else if (count0 == 1) {
+            for (int j = 0; j < n; j++) {
+                if (nums[j] == 0) {
+                    res[j] = product;
+                } else {
+                    res[j] = 0;
+                }
+            }
+        } else {
+            for (int j = 0; j < n; j++) {
+                if (nums[j] == 0) {
+                    res[j] = 0;
+                } else {
+                    res[j] = product / nums[j];
+                }
+            }
+        }
+
+        return res;
+    }
+}
