@@ -1,0 +1,53 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int widthOfBinaryTree(TreeNode root) {
+        Queue<TreeNode> q= new LinkedList<>();
+         Queue<Integer> Idxq= new LinkedList<>();
+         q.add(root);
+         Idxq.add(1);
+         int width=0;
+         while(!q.isEmpty())
+         {
+             int size=q.size();
+             int start =0;
+             int end=0;
+             for(int i=0;i<size;i++){
+                 int index=Idxq.poll();
+                 TreeNode node=q.poll();
+                 if(i==0)
+                 start=index;
+                 if(i==size-1)
+                 end=index;
+
+                 if(node.left != null)
+                 {
+                     q.add(node.left);
+                     Idxq.add(index*2);
+                 }
+                 if(node.right != null)
+                 {
+                     q.add(node.right);
+                     Idxq.add(index*2+1);
+                 }
+             }
+         width=Math.max(width,end-start+1);
+         }
+         return width;
+       
+    }
+
+}
